@@ -41,6 +41,9 @@
 
 # Ignore build folders
 **/build
+**/vs/
+**/cmake/
+**/out/
 
 # Workspace files are user-specific
 *.sublime-workspace
@@ -51,3 +54,6 @@
 
 # clangd
 .cache/
+
+CMakeSettings.json
+.gitattributes
