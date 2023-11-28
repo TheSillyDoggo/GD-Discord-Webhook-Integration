@@ -22,6 +22,10 @@ endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
+if (APPLE)
+    target_compile_options(${PROJECT_NAME} PRIVATE -fno-inline)
+endif()
+
 # Set up dependencies, resources, link Geode
 setup_geode_mod(${PROJECT_NAME})
 
