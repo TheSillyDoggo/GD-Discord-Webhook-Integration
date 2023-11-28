@@ -14,6 +14,8 @@ class Webhook
         {
             webUrl = Mod::get()->getSavedValue<std::string>("webhook-url");
 
+            #ifdef GEODE_IS_WINDOWS
+
             CCHttpRequest* request = new CCHttpRequest();
             request->setUrl(webUrl.c_str());
             request->setRequestType(CCHttpRequest::kHttpPost);
@@ -30,6 +32,8 @@ class Webhook
 
             // Release the request object
             request->release();
+
+            #endif
         }
 
         void onHttpRequestCompletedTest(CCHttpClient* client, CCHttpResponse* response) {
@@ -80,6 +84,8 @@ class Webhook
             notif = geode::Notification::create("Sending message to Discord", NotificationIcon::Loading, 10);
             notif->show();
 
+            #ifdef GEODE_IS_WINDOWS
+
             CCHttpRequest* request = new CCHttpRequest();
             request->setUrl(webUrl.c_str());
             request->setRequestType(CCHttpRequest::kHttpPost);
@@ -96,6 +102,8 @@ class Webhook
 
             // Release the request object
             request->release();
+
+            #endif
         }
             
         void onHttpRequestCompleted(CCHttpClient* client, CCHttpResponse* response) {
