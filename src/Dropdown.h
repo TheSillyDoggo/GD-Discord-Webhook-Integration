@@ -30,7 +30,9 @@ class Dropdown {
 
             auto obj2 = reinterpret_cast<CCMenuItemSprite*>(obj->getParent()->getParent()->getChildByID("flip-btn"));
             bool expanded = obj2->getScaleY() < 0 ? true : false;
+            #ifdef GEODE_IS_WINDOWS
             obj2->runAction(CCEaseBackOut::create(CCScaleTo::create(0.5f, 0.75f, (!expanded ? -0.75f : 0.75f))));
+            #endif
 
             auto parent = obj2->getParent();
             auto background = parent->getChildByID("background");
