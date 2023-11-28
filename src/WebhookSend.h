@@ -79,7 +79,7 @@ class Webhook
             notif = geode::Notification::create("Sending message to Discord", NotificationIcon::Loading, 10);
             notif->show();
 
-            std::string const& fields = CCString::createWithFormat("content=%s", s)->getCString();
+            std::string const& fields = CCString::createWithFormat("content=%s", s.c_str())->getCString();
             
             web::AsyncWebRequest()
                 .postFields(fields)
