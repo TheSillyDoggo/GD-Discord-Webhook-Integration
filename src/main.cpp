@@ -1,4 +1,3 @@
-#include "SortedOptionsLayer.h"
 #include "EditorScaling.h"
 #include <Geode/Loader.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>

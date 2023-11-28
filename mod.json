@@ -6,10 +6,6 @@
 	"developer": "TheSillyDoggo",
 	"description": "real webhooks (fake)",
 
-    "sprites": [
-        "resources/PreviewMessageButton.png"
-    ],
-
 	"settings": {
         "webhook-messages": {
             "type": "custom"
