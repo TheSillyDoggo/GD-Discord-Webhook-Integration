@@ -193,7 +193,7 @@ class MySettingNode : public SettingNode {
             btnVis->setPosition(width - 17.5f, getContentSize().height - 15);
 
             visLbl = CCLabelBMFont::create("+", "goldFont.fnt");
-            visLbl->setPosition(btnVis->getContentSize() / 2 + CCPoint({1, 4}));
+            visLbl->setPosition((btnVis->getContentSize().width / 2) + 1, (btnVis->getContentSize().height / 2) + 4);
             visLbl->setScale(1.5f);
             btnVis->addChild(visLbl);
 
@@ -307,7 +307,7 @@ class MySettingNode : public SettingNode {
             tabMenu->addChild(infoBtn);
             tabMenu->addChild(btnGD);
 
-            auto scrollLayer = geode::ScrollLayer::create(CCSize({width - 20, 128}), true, true);
+            auto scrollLayer = geode::ScrollLayer::create(CCSize::CCSize({width - 20, 128}), true, true);
             scrollLayer->m_peekLimitTop = 0;
             scrollLayer->m_peekLimitBottom = 0;
             scrollLayer->setPosition(10, 10);
@@ -327,8 +327,7 @@ class MySettingNode : public SettingNode {
             return true;
         }
 
-        void update(float dt)
-        {
+        void update(float dt) override {
             if (nodeP == nullptr)
             {
                 if (this->getParent() != nullptr)
@@ -488,7 +487,7 @@ class MySettingNode : public SettingNode {
                     textAreas.push_back(txta);
 
                     auto c = CCScale9Sprite::create("GJ_square01.png");
-                    c->setContentSize(txta->getContentSize() + CCPoint({35, 10}));
+                    c->setContentSize({txta->getContentSize().width + 35, txta->getContentSize().height + 10});
                     c->setAnchorPoint({0, 0});
                     c->setPosition(-5, -5);
                     c->setColor({0, 0, 0});
