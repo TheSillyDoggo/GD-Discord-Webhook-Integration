@@ -42,7 +42,6 @@
 # Ignore build folders
 **/build
 **/vs/
-**/cmake/
 **/out/
 
 # Workspace files are user-specific

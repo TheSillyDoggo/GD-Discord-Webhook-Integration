@@ -307,8 +307,6 @@ class MySettingNode : public SettingNode {
             tabMenu->addChild(infoBtn);
             tabMenu->addChild(btnGD);
 
-
-
             auto scrollLayer = geode::ScrollLayer::create(ccp(width - 20, 128), true, true);
             scrollLayer->m_peekLimitTop = 0;
             scrollLayer->m_peekLimitBottom = 0;
