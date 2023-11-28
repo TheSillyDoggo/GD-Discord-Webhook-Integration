@@ -1,10 +1,10 @@
-name: Build Geode Mod
+name: Test the action
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - "*"
+      - "main"
 
 jobs:
   build:
@@ -12,8 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - name: Windows
-          os: windows-latest
+        # - name: Windows
+        #   os: windows-latest
           
         - name: macOS
           os: macos-latest
@@ -23,20 +23,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          repository: geode-sdk/textureldr
+          path: textureldr
 
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          combine: true
           sdk: nightly
+          build-config: RelWithDebInfo
+          path: textureldr
+          combine: true
       
   package:
-    name: Package builds
+    name: Package both builds
     runs-on: ubuntu-latest
     needs: ['build']
 
     steps:
-      - uses: geode-sdk/build-geode-mod@combine
+      - uses: geode-sdk/build-geode-mod/@combine
         id: build
 
       - uses: actions/upload-artifact@v3
