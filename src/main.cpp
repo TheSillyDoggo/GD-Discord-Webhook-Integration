@@ -171,7 +171,7 @@ class MySettingNode : public SettingNode {
             auto menu = CCMenu::create();
             menu->setPosition(0, 0);
 
-            auto webUrlLbl = CCLabelBMFont::create("Webhook URL:", "bigFont.fnt");
+            auto webUrlLbl = CCLabelBMFont::create("Webhook URL:", "chatFont.fnt");
             webUrlLbl->setAnchorPoint({0, 1});
             webUrlLbl->setPosition(10, getContentSize().height - 10);
             webUrlLbl->setScale(0.35f);
@@ -185,6 +185,7 @@ class MySettingNode : public SettingNode {
             webUrlInp->getInput()->m_usePasswordChar = true;
             webUrlInp->setString(Mod::get()->getSavedValue<std::string>("webhook-url"));
             webUrlInp->getInput()->setDelegate(new WebURLChanged());
+            webUrlInp->getInput()->setAllowedChars("qwertyuiopasdfghjklzxcvbnm1234567890-=_+[]{}\\|/?><!@#$%^&*()~`");
             menu->addChild(webUrlInp);
 
             auto btnVis = CCMenuItemSpriteExtra::create(CCSprite::create("GJ_button_01.png"), this, menu_selector(MySettingNode::toggleVisibility));
@@ -506,6 +507,7 @@ class MySettingNode : public SettingNode {
                     textInputs.push_back(txti);
                     txti->getInput()->setDelegate(new MessageChanged());
                     txti->getInput()->m_maxLabelLength = 2000;
+                    txti->getInput()->setAllowedChars("qwertyuiopasdfghjklzxcvbnm1234567890-=_+[]{}\\|/?><!@#$%^&*()~`");
 
                     b->addChild(ifMsg);
                     b->addChild(endIfMsg);

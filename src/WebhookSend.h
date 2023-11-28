@@ -44,15 +44,6 @@ class Webhook
             });
         }
 
-        void onHttpRequestCompletedTest(CCHttpClient* client, CCHttpResponse* response) {
-            if (!response)
-            {
-                
-
-                return;
-            }
-        }
-
         #pragma endregion
 
         static void SendDiscordMessage(gd::string msg)
