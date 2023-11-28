@@ -15,13 +15,12 @@ class Webhook
         {
             webUrl = Mod::get()->getSavedValue<std::string>("webhook-url");
 
-            std::string const& url = webUrl;
             std::string const& fields = CCString::createWithFormat("content=%s", "This is a test message for the Geometry Dash Discord webhook integration mod by TheSillyDoggo.\nThe mod is available for download at https://geode-sdk.org/mods/TheSillyDoggo.DiscordWebhook/")->getCString();
             
             web::AsyncWebRequest()
                 .postFields(fields)
                 .postRequest()
-                .fetch(url).text()
+                .fetch(webUrl).text()
                 .then([&](std::string & response) {
 
                     geode::createQuickPopup(
@@ -43,6 +42,15 @@ class Webhook
                     "OK", nullptr, nullptr);
 
             });
+        }
+
+        void onHttpRequestCompletedTest(CCHttpClient* client, CCHttpResponse* response) {
+            if (!response)
+            {
+                
+
+                return;
+            }
         }
 
         #pragma endregion
@@ -67,46 +75,31 @@ class Webhook
                 s = replaceAll(s, "{difficulty}", GetLevelDifficulty(PlayLayer::get()->m_level));
                 s = replaceAll(s, "{percentage}", GetPlayerPercentage());
             }
-            //log::info(s);
 
             notif = geode::Notification::create("Sending message to Discord", NotificationIcon::Loading, 10);
             notif->show();
 
-            #ifdef GEODE_IS_WINDOWS
-
-            CCHttpRequest* request = new CCHttpRequest();
-            request->setUrl(webUrl.c_str());
-            request->setRequestType(CCHttpRequest::kHttpPost);
-
-            // Set the request data
-            CCString* postData = CCString::createWithFormat("content=%s", s.c_str());
-            request->setRequestData(postData->getCString(), strlen(postData->getCString()));
-
-            // Set callback function
-            request->setResponseCallback(CCDirector::get()->getRunningScene(), httpresponse_selector(Webhook::onHttpRequestCompleted));
-
-            // Send the request
-            CCHttpClient::getInstance()->send(request);
-
-            // Release the request object
-            request->release();
-
-            #endif
-        }
+            std::string const& fields = CCString::createWithFormat("content=%s", s)->getCString();
             
-        void onHttpRequestCompleted(CCHttpClient* client, CCHttpResponse* response) {
-            if (!response)
-            {
+            web::AsyncWebRequest()
+                .postFields(fields)
+                .postRequest()
+                .fetch(webUrl).text()
+                .then([&](std::string & response) {
+
+                    notif->hide();
+                    notif = geode::Notification::create("Successfully sent message to Discord", NotificationIcon::Success, 0.5f);
+                    notif->show();
+
+            }).expect([](std::string const& error) {
+
+                log::error("Error occured while doing a web request: " + error);
+
                 notif->hide();
                 notif = geode::Notification::create("Error sending message to Discord", NotificationIcon::Error, 0.5f);
                 notif->show();
 
-                return;
-            }
-
-            notif->hide();
-            notif = geode::Notification::create("Successfully sent message to Discord", NotificationIcon::Success, 0.5f);
-            notif->show();
+            });
         }
 
         static std::string replaceAll(std::string& str, const std::string& from, const std::string& to) {
@@ -133,18 +126,18 @@ class Webhook
 
         static std::string GetLevelCreator(GJGameLevel* level)
         {
-            if (std::strcmp(level->m_creatorName.c_str(), ""))
-            {
-                return "RobTop";
-            }
-
             return level->m_creatorName;
         }
 
         static std::string GetLevelID(GJGameLevel* level)
         {
             std::stringstream st;
+            
+            #ifdef GEODE_IS_WINDOWS // bindows
             st << "" << level->m_levelID.value();
+            #else // os x
+            st << "" << level->m_levelID;
+            #endif            
 
             return st.str();
         }
