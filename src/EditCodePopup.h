@@ -49,11 +49,13 @@ protected:
         std::vector<std::string> d = {Stuff::getPrettyString("{blank}"), Stuff::getPrettyString("{normal}"), Stuff::getPrettyString("{practice}")};
 
         auto b = Dropdown::create(d);
-        b->menu->setPosition(m_size / 2 + CCPoint({-200, 0}));
+        b->menu->setPositionX(m_size.width / 2 - 200);
+        b->menu->setPositionY(m_size.height / 2);
         menu->addChild(b->menu);
 
         auto c = Dropdown::create(d);
-        c->menu->setPosition(m_size / 2 + CCPoint({200, 0}));
+        c->menu->setPositionX(m_size.width / 2 + 200);
+        c->menu->setPositionY(m_size.height / 2);
         menu->addChild(c->menu);
 
         menu->addChild(close);
