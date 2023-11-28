@@ -97,7 +97,7 @@ class Dropdown {
                 auto lbl = CCLabelBMFont::create(strs[i].c_str(), "bigFont.fnt");
                 lbl->limitLabelWidth(size.width - 20, 0.6f, 0);
 
-                auto btn = CCMenuItemSpriteExtra::create(lbl, menu, menu_selector(onSelect));
+                auto btn = CCMenuItemSpriteExtra::create(lbl, menu, menu_selector(Dropdown::onSelect));
                 btn->setPosition({size.width / 2, (background->getScaledContentSize().height - (size.height * i)) + size.height / 2});
 
                 btnMenu->addChild(btn);
