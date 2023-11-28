@@ -9,7 +9,9 @@ class Dropdown {
         void onToggle(CCObject* sender) {
             auto obj = reinterpret_cast<CCMenuItemSprite*>(sender);
             bool expanded = obj->getScaleY() < 0 ? true : false;
+            #ifdef GEODE_IS_WINDOWS
             obj->runAction(CCEaseBackOut::create(CCScaleTo::create(0.5f, 0.75f, (!expanded ? -0.75f : 0.75f))));
+            #endif
 
             auto parent = obj->getParent();
             auto background = parent->getChildByID("background");
