@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
 project(ModMenu VERSION 1.0.0)
 
@@ -22,6 +21,10 @@ else()
 endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
+
+if (APPLE)
+    target_compile_options(${PROJECT_NAME} PRIVATE -fno-inline)
+endif()
 
 # Set up dependencies, resources, link Geode
 setup_geode_mod(${PROJECT_NAME})

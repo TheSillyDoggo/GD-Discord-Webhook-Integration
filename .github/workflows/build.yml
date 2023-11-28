@@ -23,12 +23,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+        with:
+          submodules: 'recursive'
+          
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
           combine: true
-          sdk: nightly
       
   package:
     name: Package builds
@@ -41,5 +42,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Build Output
+          name: GD-Discord-Webhook-Integration Build Output
           path: ${{ steps.build.outputs.build-output }}
