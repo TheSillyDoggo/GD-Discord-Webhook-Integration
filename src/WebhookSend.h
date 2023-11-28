@@ -137,7 +137,7 @@ class Webhook
 
         static std::string GetLevelCreator(GJGameLevel* level)
         {
-            if (level->m_creatorName + " " == " ")
+            if (level->m_creatorName.c_str() == "")
             {
                 return "RobTop";
             }
