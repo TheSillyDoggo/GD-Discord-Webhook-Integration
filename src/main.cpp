@@ -284,7 +284,7 @@ class MySettingNode : public SettingNode {
             labelAdd->setPosition(purple->getScaledContentSize() / 2);
 
             auto btnGD = CCMenuItemSpriteExtra::create(purple, this, menu_selector(MySettingNode::onAddCondition));
-            btnGD->setPosition({550, 44});
+            btnGD->setPosition({535, 44});
             btnGD->addChild(labelAdd);
 
             auto lblText = CCLabelBMFont::create("Messages for event", "bigFont.fnt");
@@ -585,6 +585,15 @@ class MySettingNode : public SettingNode {
 
         void onSelectTab(CCObject* sender)
         {
+            Mod::get()->setSavedValue<std::string>("webhook-url", WebURLChanged::currentText);
+            WebURLChanged::startText = WebURLChanged::currentText;
+
+            std::stringstream ss;
+            ss << "msgTab" << MySettingNode::selected;
+            Mod::get()->setSavedValue<std::string>(ss.str(), MySettingNode::save(MySettingNode::messageMap));
+
+            MySettingNode::instance->updateToggled();
+
             int s = selected;
             selected = reinterpret_cast<CCNode*>(sender)->getTag();
 
@@ -605,6 +614,7 @@ class MySettingNode : public SettingNode {
             messageMap.push_back(std::make_pair<std::string, std::string>("", ""));
 
             Stuff::UpdateSettings(false);
+            MySettingNode::instance->updateToggled();
         }
 
         static std::vector<std::string> split(const std::string& s, char seperator)
@@ -847,8 +857,13 @@ std::string Stuff::getMessage(std::string str)
                     return arr[i].second;
                 }
             }
-            left = MySettingNode::split(arr[i].first, getSeperator(arr[i].first).c_str()[0])[0];
-            right = MySettingNode::split(arr[i].first, getSeperator(arr[i].first).c_str()[0])[1];
+            else if (arr[0].first == "{blank}")
+            {
+                return arr[i].second;
+            }
+
+            //left = MySettingNode::split(arr[i].first, getSeperator(arr[i].first).c_str()[0])[0];
+            //right = MySettingNode::split(arr[i].first, getSeperator(arr[i].first).c_str()[0])[1];
 
             
         }

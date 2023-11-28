@@ -6,6 +6,7 @@ class EditCodePopup : public geode::Popup<int> {
 public:
     InputNode *inpNode;
     std::pair<std::string, std::string> getMsg(int value);
+    Dropdown* dd;
     int value = 0;
 protected:
     bool setup(int value) override {
@@ -25,12 +26,12 @@ protected:
 
         auto label = CCLabelBMFont::create(ss.str().c_str(), "bigFont.fnt");
         label->setPosition(winSize / 2);
-        menu->addChild(label);        
+        //menu->addChild(label);        
 
-        auto a = InputNode::create(100, "", "bigFont.fnt");
-        a->setString(getMsg(value).first);
-        inpNode = a;
-        menu->addChild(a);
+        //auto a = InputNode::create(100, "", "bigFont.fnt");
+        //a->setString(getMsg(value).first);
+        //inpNode = a;
+        //menu->addChild(a);
 
         auto closeSpr = ButtonSprite::create("Cancel");
         auto setSpr = ButtonSprite::create("Set");
@@ -49,15 +50,11 @@ protected:
         std::vector<std::string> d = {Stuff::getPrettyString("{blank}"), Stuff::getPrettyString("{normal}"), Stuff::getPrettyString("{practice}")};
 
         auto b = Dropdown::create(d);
-        b->menu->setPositionX(m_size.width / 2 - 200);
-        b->menu->setPositionY(m_size.height / 2);
+        b->menu->setPositionX(m_size.width / 2);
+        b->menu->setPositionY(m_size.height - 50);
         b->lbl->setString(Stuff::getPrettyString(getMsg(value).first).c_str());
+        dd = b;
         menu->addChild(b->menu);
-
-        auto c = Dropdown::create(d);
-        c->menu->setPositionX(m_size.width / 2 + 200);
-        c->menu->setPositionY(m_size.height / 2);
-        menu->addChild(c->menu);
 
         menu->addChild(close);
         menu->addChild(set);
@@ -78,7 +75,7 @@ protected:
 
         //ss << "{stars}" << "==" << "10";
 
-        Stuff::Set(inpNode->getString(), value);
+        Stuff::Set(dd->lbl->getString(), value);
         Stuff::UpdateSettings(false);
 
         this->removeFromParentAndCleanup(true);
@@ -87,7 +84,7 @@ protected:
 public:
     static EditCodePopup* create(int index) {
         auto ret = new EditCodePopup();
-        if (ret && ret->init(300.f, 160.f, index)) {
+        if (ret && ret->init(300.f, 200.f, index)) {
             ret->autorelease();
             return ret;
         }

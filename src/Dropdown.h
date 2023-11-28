@@ -55,7 +55,7 @@ class Dropdown {
             Dropdown* dd = new Dropdown();
             dd->strs = strs;
 
-            CCSize size = {120, 25};
+            CCSize size = {240, 25};
 
             CCMenu* menu = CCMenu::create();
             menu->ignoreAnchorPointForPosition(false);
@@ -88,7 +88,7 @@ class Dropdown {
 
             auto lbl = CCLabelBMFont::create(strs[0].c_str(), "bigFont.fnt");
             lbl->setScale(0.5f);
-            lbl->setPosition({48, size.height / 2});
+            lbl->setPosition({size.width / 2 - (arrowBtn->getScaledContentSize().width / 2) - 5, size.height / 2});
             lbl->limitLabelWidth(145, 0.6f, 0);
             lbl->setID("selected-label");
             dd->lbl = lbl;
