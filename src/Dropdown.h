@@ -5,12 +5,15 @@ class Dropdown {
         int selected = 0;
         CCMenu* menu;
         std::vector<std::string> strs;
+        CCLabelBMFont* lbl;
 
         void onToggle(CCObject* sender) {
             auto obj = reinterpret_cast<CCMenuItemSprite*>(sender);
             bool expanded = obj->getScaleY() < 0 ? true : false;
             #ifdef GEODE_IS_WINDOWS
             obj->runAction(CCEaseBackOut::create(CCScaleTo::create(0.5f, 0.75f, (!expanded ? -0.75f : 0.75f))));
+            #else
+            obj->runAction(CCScaleTo::create(0.5f, 0.75f, (!expanded ? -0.75f : 0.75f)));
             #endif
 
             auto parent = obj->getParent();
@@ -32,6 +35,8 @@ class Dropdown {
             bool expanded = obj2->getScaleY() < 0 ? true : false;
             #ifdef GEODE_IS_WINDOWS
             obj2->runAction(CCEaseBackOut::create(CCScaleTo::create(0.5f, 0.75f, (!expanded ? -0.75f : 0.75f))));
+            #else
+            obj2->runAction(CCScaleTo::create(0.5f, 0.75f, (!expanded ? -0.75f : 0.75f)));
             #endif
 
             auto parent = obj2->getParent();
@@ -84,13 +89,14 @@ class Dropdown {
             auto lbl = CCLabelBMFont::create(strs[0].c_str(), "bigFont.fnt");
             lbl->setScale(0.5f);
             lbl->setPosition({48, size.height / 2});
-            lbl->limitLabelWidth(size.width - 15 - spr->getScaledContentSize().width, 0.6f, 0);
+            lbl->limitLabelWidth(145, 0.6f, 0);
             lbl->setID("selected-label");
+            dd->lbl = lbl;
             menu->addChild(lbl);
 
             auto btnMenu = CCMenu::create();
             btnMenu->setAnchorPoint({0, 1});
-            btnMenu->setPosition({0, 0});
+            btnMenu->setPosition({0, size.height});
             btnMenu->setContentSize({size.width, size.height * strs.size()});
             btnMenu->ignoreAnchorPointForPosition(false);
             btnMenu->setVisible(false);

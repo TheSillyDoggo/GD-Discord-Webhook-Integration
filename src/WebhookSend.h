@@ -1,3 +1,4 @@
+#include <Geode/utils/web.hpp>
 using namespace geode::prelude;
 
 static inline LoadingCircle* loading = nullptr;
@@ -14,31 +15,26 @@ class Webhook
         {
             webUrl = Mod::get()->getSavedValue<std::string>("webhook-url");
 
-            #ifdef GEODE_IS_WINDOWS
+            std::string const& url = webUrl;
+            std::string const& fields = CCString::createWithFormat("content=%s", "This is a test message for the Geometry Dash Discord webhook integration mod by TheSillyDoggo.\nThe mod is available for download at https://geode-sdk.org/mods/TheSillyDoggo.DiscordWebhook/")->getCString();
+            
+            web::AsyncWebRequest()
+                .postFields(fields)
+                .postRequest()
+                .fetch(url).text()
+                .then([&](std::string & response) {
 
-            CCHttpRequest* request = new CCHttpRequest();
-            request->setUrl(webUrl.c_str());
-            request->setRequestType(CCHttpRequest::kHttpPost);
+                    geode::createQuickPopup(
+                        "Sent Test Message",
+                        "<cg>Success</c> sending the test message, I <cl>think</c>?\nidk I can't tell go check yourself",
+                        "OK", nullptr, nullptr);
 
-            //todo: get the mod on the geode sdk
-            CCString* postData = CCString::createWithFormat("content=%s", "This is a test message for the Geometry Dash Discord webhook integration mod by TheSillyDoggo.\nThe mod is available for download at https://geode-sdk.org/mods/TheSillyDoggo.DiscordWebhook/");
-            request->setRequestData(postData->getCString(), strlen(postData->getCString()));
+                    loading->fadeAndRemove();
 
-            // Set callback function
-            request->setResponseCallback(CCDirector::get()->getRunningScene(), httpresponse_selector(Webhook::onHttpRequestCompletedTest));
+            }).expect([](std::string const& error) {
 
-            // Send the request
-            CCHttpClient::getInstance()->send(request);
+                log::error("Error occured while doing a web request: " + error);
 
-            // Release the request object
-            request->release();
-
-            #endif
-        }
-
-        void onHttpRequestCompletedTest(CCHttpClient* client, CCHttpResponse* response) {
-            if (!response)
-            {
                 loading->fadeAndRemove();
 
                 geode::createQuickPopup(
@@ -46,15 +42,7 @@ class Webhook
                     "<cr>Failure</c> sending the test message.\nYou can see the error msg by pressing the button",
                     "OK", nullptr, nullptr);
 
-                return;
-            }
-
-            geode::createQuickPopup(
-                "Sent Test Message",
-                "<cg>Success</c> sending the test message, I <cl>think</c>?\nidk I can't tell go check yourself",
-                "OK", nullptr, nullptr);
-
-            loading->fadeAndRemove();
+            });
         }
 
         #pragma endregion

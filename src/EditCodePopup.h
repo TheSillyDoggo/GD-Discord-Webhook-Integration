@@ -51,6 +51,7 @@ protected:
         auto b = Dropdown::create(d);
         b->menu->setPositionX(m_size.width / 2 - 200);
         b->menu->setPositionY(m_size.height / 2);
+        b->lbl->setString(Stuff::getPrettyString(getMsg(value).first).c_str());
         menu->addChild(b->menu);
 
         auto c = Dropdown::create(d);
