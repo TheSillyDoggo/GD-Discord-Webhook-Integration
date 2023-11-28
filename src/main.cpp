@@ -171,7 +171,7 @@ class MySettingNode : public SettingNode {
             auto menu = CCMenu::create();
             menu->setPosition(0, 0);
 
-            auto webUrlLbl = CCLabelBMFont::create("Webhook URL:", "chatFont.fnt");
+            auto webUrlLbl = CCLabelBMFont::create("Webhook URL:", "bigFont.fnt");
             webUrlLbl->setAnchorPoint({0, 1});
             webUrlLbl->setPosition(10, getContentSize().height - 10);
             webUrlLbl->setScale(0.35f);
@@ -273,7 +273,7 @@ class MySettingNode : public SettingNode {
                 tabMenu->addChild(btnGD);
             }
 
-            auto labelAdd = CCLabelBMFont::create("Add condition", "goldFont.fnt");
+            auto labelAdd = CCLabelBMFont::create("Add condition", "bigFont.fnt");
             labelAdd->setScale(0.7f);
             labelAdd->setAnchorPoint(CCPoint(0.5f, 0.5f));
 
@@ -507,7 +507,7 @@ class MySettingNode : public SettingNode {
                     textInputs.push_back(txti);
                     txti->getInput()->setDelegate(new MessageChanged());
                     txti->getInput()->m_maxLabelLength = 2000;
-                    txti->getInput()->setAllowedChars("qwertyuiopasdfghjklzxcvbnm1234567890-=_+[]{}\\|/?><!@#$%^&*()~`");
+                    txti->getInput()->setAllowedChars("qwertyuiopasdfghjklzxcvbnm1234567890-=_+[]{}\\|/?><!@#$%^&*()~` \"'");
 
                     b->addChild(ifMsg);
                     b->addChild(endIfMsg);
