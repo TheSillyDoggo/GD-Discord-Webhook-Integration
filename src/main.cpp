@@ -309,7 +309,7 @@ class MySettingNode : public SettingNode {
 
 
 
-            auto scrollLayer = geode::ScrollLayer::create(CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint::CCPoint(width - 20, 128), true, true);
+            auto scrollLayer = geode::ScrollLayer::create(ccp(width - 20, 128), true, true);
             scrollLayer->m_peekLimitTop = 0;
             scrollLayer->m_peekLimitBottom = 0;
             scrollLayer->setPosition(10, 10);
