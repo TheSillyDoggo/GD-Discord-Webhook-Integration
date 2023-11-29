@@ -21,18 +21,6 @@ protected:
         menu->setContentSize(m_size);
         menu->ignoreAnchorPointForPosition(false);
 
-        std::stringstream ss;
-        ss << value;
-
-        auto label = CCLabelBMFont::create(ss.str().c_str(), "bigFont.fnt");
-        label->setPosition(winSize / 2);
-        //menu->addChild(label);        
-
-        //auto a = InputNode::create(100, "", "bigFont.fnt");
-        //a->setString(getMsg(value).first);
-        //inpNode = a;
-        //menu->addChild(a);
-
         auto closeSpr = ButtonSprite::create("Cancel");
         auto setSpr = ButtonSprite::create("Set");
 
@@ -71,10 +59,6 @@ protected:
 
     void Set(CCObject* sender)
     {
-        //std::stringstream ss;
-
-        //ss << "{stars}" << "==" << "10";
-
         Stuff::Set(dd->lbl->getString(), value);
         Stuff::UpdateSettings(false);
 
