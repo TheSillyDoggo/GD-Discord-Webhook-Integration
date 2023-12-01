@@ -5,6 +5,7 @@
 	"name": "Discord Webhook Integration",
 	"developer": "TheSillyDoggo",
 	"description": "real webhooks (fake)",
+	"repository": "https://github.com/TheSillyDoggo/GD-Discord-Webhook-Integration",
 
 	"settings": {
         "webhook-messages": {
